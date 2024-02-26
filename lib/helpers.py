@@ -10,24 +10,49 @@ def exit_program():
 
 
 def list_departments():
-    pass
+    departments = Department.get_all()
+    for department in departments:
+        print(department)
 
 
 def find_department_by_name():
-    pass
-
+    name = input("Find department by name: ")
+    department = Department.find_by_name(name)
+    print(department) if department else print(
+        f'Department {name} not found')
 
 def find_department_by_id():
-    pass
+    id = input("Find department by ID: ")
+    department = Department.find_by_id(id)
+    print(department) if department else print(
+        f'Department {id} not found')
 
 
 def create_department():
-    pass
+    name = input("Department Name: ")
+    location = input("Department Location: ")
+    try:
+        department = Department.create(name, location)
+        print(f"Department Created: {department}")
+    except Exception as exc:
+        print("Error creating department: ", exc)
+
 
 
 def update_department():
-    pass
-
+    depo_id = input("Department ID: ")
+    if depo := Department.find_by_id(depo_id):
+        try:
+            name = input("New Name: ")
+            depo.name = name
+            location = input("New Location: ")
+            depo.location = location
+            depo.update()
+            print(f'Success: {depo}')
+        except Exception as exc:
+            print("Error updating department: ", exc)
+    else:
+        print(f'Department {depo_id} not found')
 
 def delete_department():
     pass
